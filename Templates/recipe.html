@@ -1,0 +1,26 @@
+{% include 'base.html' %}
+{% block content %}
+{% load static %}
+
+<section class =  "p-lg-0 pt-lg-5 mb-5 py-3 text-center">
+		<div class="search-result">
+			<div class = "d-flex flex-wrap align-item-center justify-content-center">
+		    	{% for k in final_list %}
+			    <div class="card" style="width: 30rem; ">
+			      <img class = "d-flex align-item-center justify-content-center"src="{{k.2}}" alt="Image">
+			      <a class = "dish-name" href="recipe/{{k.0}}">
+			        <h6>{{k.1}}</h6>
+			      </a>
+		    	</div>
+		    	{%endfor%}
+	  		</div>
+		</div>
+</section>
+<section class= "text-center bg-light p-5">
+  	<footer>
+	    <h6> Designed & Built by Kartik Abuj</h6>
+	</footer>
+</section>
+
+
+{% endblock %}
