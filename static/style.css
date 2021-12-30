@@ -1,0 +1,51 @@
+body{
+	background: #fff;
+	color:  #000;
+	font-family: Muli,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    font-size: 23px;
+    -webkit-font-smoothing: antialiased;
+}
+.card{
+	padding: 20px;
+	margin: 20px;
+	border-radius:  1rem;
+	box-shadow: 0 0 14px #808080;
+}
+.dish-name{
+	color: #000;
+	font-size: 1rem;
+	margin-top: 15px;
+	font-weight: 700;
+	text-decoration: none;
+}
+.header-image {
+    background: gray;
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    margin-bottom: 30px;
+}
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+#main-image{
+    margin-top: 50px;
+    height: 170px;
+    margin-bottom: 30px;
+    filter: brightness(0.5);
+}
