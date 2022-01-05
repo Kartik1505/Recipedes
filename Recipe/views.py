@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import requests
 import json
 
@@ -40,7 +40,7 @@ def home(request):
 		}
 
 	except:
-		return render(request, "errorLoading.html")
+		return redirect("home")
 	return render(request, "home.html", context)
 
 
@@ -58,40 +58,6 @@ def dataRequest(request):
 
 
 
-"""
-def home1(request, recipe):
-	recipe = recipe
-	randomRecipeApi = requests.get(base_url+"random?number=20&tags="+recipe+"&apiKey="+apikey)
-	randomRecipeApi = json.loads(randomRecipeApi.content)
-
-	recipes = randomRecipeApi["recipes"]
-
-	idList = []
-	imageList = []
-	titleList = []
-	finalRandomRecipeList = []
-
-	for i in range(len(recipes)):
-		ids = randomRecipeApi["recipes"][i]["id"]
-		image = randomRecipeApi["recipes"][i]["image"]
-		title = randomRecipeApi["recipes"][i]["title"]
-
-		idList.append(ids)
-		imageList.append(image)
-		titleList.append(title)
-
-	for x in zip(idList,imageList,titleList):
-		finalRandomRecipeList.append(x)
-
-	
-
-
-	context = {
-		"finalRandomRecipeList":finalRandomRecipeList,
-	}
-
-	return render(request, "home.html", context)
-"""
 def data(request):
 	api = dataRequest(request)
 	lists0 = []
@@ -127,63 +93,62 @@ def recipe(request, id1):
 	id1 = str(id1)
 	none_variable = ""
 	context = {}
+	image = ""
+
+	api1 = requests.get("https://api.spoonacular.com/recipes/"+id1+"/information?includeNutrition=false&apiKey="+apikey)
+	api1 = json.loads(api1.content)
+
+	ingImageList = []
+	ingAmountList = [] 
+	finalIngList = []
+
+	ingInstructionList = []
+
+	title = api1["title"]
 	try:
-		api1 = requests.get("https://api.spoonacular.com/recipes/"+id1+"/information?includeNutrition=false&apiKey="+apikey)
-		api1 = json.loads(api1.content)
-
-		ingImageList = []
-		ingAmountList = [] 
-		finalIngList = []
-
-		ingInstructionList = []
-
-		title = api1["title"]
 		image = api1["image"]
-		summary = api1["summary"]
-		readyInMinutes = api1["readyInMinutes"]
-		servings = api1["servings"]
-		vegetarian = api1["vegetarian"]
-		veryHealthy = api1["veryHealthy"]
-		extendedIngredients = api1["extendedIngredients"]
-		instruction = api1["analyzedInstructions"][0]["steps"]
-
-		if image == "":
-			image == ""
-
-		for i in range(len(extendedIngredients)):
-			ingImage = api1["extendedIngredients"][i]["image"]
-			ingamount = api1["extendedIngredients"][i]["originalString"]
-
-			ingImageList.append(ingImage)
-			ingAmountList.append(ingamount)
-
-
-		for x in zip(ingImageList, ingAmountList):
-			finalIngList.append(x)
-			
-		for m in range(len(instruction)):
-			ingInstruction = api1["analyzedInstructions"][0]["steps"][m]["step"]
-
-			ingInstructionList.append(ingInstruction)
-
-
-
-
-		context = {
-			"title":title,
-			"image":image,
-			"summary":summary,
-			"readyInMinutes":readyInMinutes,
-			"serving":servings,
-			"veryHealthy":veryHealthy,
-			"vegetarian":vegetarian,
-			"finalIngList":finalIngList,
-			"ingInstructionList":ingInstructionList,
-			"none_variable":none_variable,
-		}
-
 	except:
-		return render(request, "errorPage.html")
+		print("error")
+	summary = api1["summary"]
+	readyInMinutes = api1["readyInMinutes"]
+	servings = api1["servings"]
+	vegetarian = api1["vegetarian"]
+	veryHealthy = api1["veryHealthy"]
+	extendedIngredients = api1["extendedIngredients"]
+	instruction = api1["analyzedInstructions"][0]["steps"]
+
+
+	for i in range(len(extendedIngredients)):
+		ingImage = api1["extendedIngredients"][i]["image"]
+		ingamount = api1["extendedIngredients"][i]["originalString"]
+
+		ingImageList.append(ingImage)
+		ingAmountList.append(ingamount)
+
+
+	for x in zip(ingImageList, ingAmountList):
+		finalIngList.append(x)
+		
+	for m in range(len(instruction)):
+		ingInstruction = api1["analyzedInstructions"][0]["steps"][m]["step"]
+
+		ingInstructionList.append(ingInstruction)
+
+
+
+
+	context = {
+		"title":title,
+		"image":image,
+		"summary":summary,
+		"readyInMinutes":readyInMinutes,
+		"serving":servings,
+		"veryHealthy":veryHealthy,
+		"vegetarian":vegetarian,
+		"finalIngList":finalIngList,
+		"ingInstructionList":ingInstructionList,
+		"none_variable":none_variable,
+	}
 
 	return render(request,"recipe_select.html", context)
 
