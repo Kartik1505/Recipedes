@@ -32,9 +32,7 @@ def home(request):
 		for x in zip(idList,imageList,titleList):
 			finalRandomRecipeList.append(x)
 
-		
-
-
+	
 		context = {
 			"finalRandomRecipeList":finalRandomRecipeList,
 		}
